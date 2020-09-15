@@ -51,16 +51,16 @@ public class StarsWithMoviesDao {
     public StarWithTheMostMoviesDto getStarWithTheMostMovies(){
         StarWithTheMostMoviesDto starWithTheMostMoviesDto = new StarWithTheMostMoviesDto();
         try {
-                String sql =    "Select " +
-                            "CONCAT(s.first_name,' ',s.last_name) as full_name," +
-                            "COUNT(*) as total_movies " +
-                            "from " +
-                            "star as s " +
-                            "inner join movie_star as ms on  s.id = ms.star_id " +
-                            "inner join  movie as m on m.id = ms.movie_id " +
-                            "group by s.id " +
-                            "order by total_movies DESC " +
-                            "limit 1";
+                String sql =  "Select " +
+                              "CONCAT(s.first_name,' ',s.last_name) as full_name," +
+                              "COUNT(*) as total_movies " +
+                              "from " +
+                              "star as s " +
+                              "inner join movie_star as ms on  s.id = ms.star_id " +
+                              "inner join  movie as m on m.id = ms.movie_id " +
+                              "group by s.id " +
+                              "order by total_movies DESC " +
+                              "limit 1";
 
                 Query query = entityManager.createNativeQuery(sql);
                 List<Object[]> list = query.getResultList();
