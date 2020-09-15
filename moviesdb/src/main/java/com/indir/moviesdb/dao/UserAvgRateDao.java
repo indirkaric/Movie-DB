@@ -16,7 +16,7 @@ public class UserAvgRateDao {
     public List<UserAvgRateDto> getAverageRateByUser(){
         List<UserAvgRateDto> resultList = new ArrayList<>();
         try {
-                String sql =    "Select " +
+                String sql = "Select " +
                             "u.id," +
                             "u.first_name," +
                             "u.last_name," +
