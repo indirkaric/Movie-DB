@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 
 @Service
@@ -37,14 +36,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
-    public ResponseEntity saveStar(StarDto starDto, BindingResult result) {
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<StarDto> saveStar(StarDto starDto) {
         Star tempStar = starRepository.save(starMapper.toEntity(starDto));
         StarDto star = starMapper.toDto(tempStar);
         return new ResponseEntity<StarDto>(star, HttpStatus.CREATED);

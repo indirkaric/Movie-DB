@@ -13,6 +13,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping(StarsWithMoviesController.ROOT_PATH)
 public class StarsWithMoviesController {
+
     private final StarsWithMoviesDao starsWithMoviesDao;
     public static final String ROOT_PATH = "/api/v1/stars-movies";
 

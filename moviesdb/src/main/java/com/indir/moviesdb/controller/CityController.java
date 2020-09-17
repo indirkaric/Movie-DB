@@ -7,7 +7,6 @@ import com.indir.moviesdb.service.CityService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(CityController.ROOT_PATH)
 public class CityController {
+
     private final CityService cityService;
-    private final CityMapper cityMapper;
     public static final String ROOT_PATH = "/api/v1/cities";
 
     @ApiOperation(value = Constants.GET_CITIES)
@@ -53,7 +52,7 @@ public class CityController {
 
     @ApiOperation(value = Constants.SAVE_CITY)
     @PostMapping("")
-    public ResponseEntity saveCity(@Valid @RequestBody CityDto cityDto, BindingResult result){
-        return cityService.saveCity(cityDto, result);
+    public ResponseEntity<CityDto> saveCity(@Valid @RequestBody CityDto cityDto){
+        return cityService.saveCity(cityDto);
     }
 }

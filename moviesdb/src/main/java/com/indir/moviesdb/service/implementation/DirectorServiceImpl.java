@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,14 +46,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public ResponseEntity saveDirector(DirectorDto directorDto, BindingResult result) {
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<DirectorDto> saveDirector(DirectorDto directorDto) {
         Director tempDirector = directorRepository.save(directorMapper.toEntity(directorDto));
         DirectorDto director = directorMapper.toDto(tempDirector);
         return new ResponseEntity<DirectorDto>(director, HttpStatus.CREATED);

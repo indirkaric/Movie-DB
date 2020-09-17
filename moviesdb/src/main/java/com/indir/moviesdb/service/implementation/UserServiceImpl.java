@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,6 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
+
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -58,14 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity saveUser(UserDto userDto, BindingResult result) {
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<UserDto> saveUser(UserDto userDto) {
         User tempUser = userMapper.toEntity(userDto);
         tempUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         UserDto user = userMapper.toDto(userRepository.save(tempUser));

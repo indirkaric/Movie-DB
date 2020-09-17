@@ -5,7 +5,7 @@ import com.indir.moviesdb.dto.UserDto;
 import com.indir.moviesdb.repository.filter.UserSearchFilter;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserService {
     List<UserDto> getAllUsers();
     UserDto findById(Integer id);
-    ResponseEntity saveUser(UserDto userDto, BindingResult result);
+    ResponseEntity<UserDto> saveUser(UserDto userDto);
     void deleteUser(Integer id);
     List<UserDto> getUsersWithOrders();
     List<UserDto> getUsersWithoutOrders();

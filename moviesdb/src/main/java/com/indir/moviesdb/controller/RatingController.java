@@ -6,7 +6,6 @@ import com.indir.moviesdb.service.RatingService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(RatingController.ROOT_PATH)
 public class RatingController {
+
     private final RatingService ratingService;
     public static final String ROOT_PATH = "/api/v1/ratings";
 
@@ -28,8 +28,8 @@ public class RatingController {
 
     @ApiOperation(value = Constants.SAVE_RATING)
     @PostMapping("")
-    public ResponseEntity saveRating(@Valid @RequestBody RatingDto ratingDto, BindingResult result){
-        return ratingService.saveRating(ratingDto, result);
+    public ResponseEntity<RatingDto> saveRating(@Valid @RequestBody RatingDto ratingDto){
+        return ratingService.saveRating(ratingDto);
     }
 
 }

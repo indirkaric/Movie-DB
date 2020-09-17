@@ -2,12 +2,10 @@ package com.indir.moviesdb.controller;
 
 import com.indir.moviesdb.constants.Constants;
 import com.indir.moviesdb.dto.CountryDto;
-import com.indir.moviesdb.mapper.CountryMapper;
 import com.indir.moviesdb.service.CountryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -17,8 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(CountryController.ROOT_PATH)
 public class CountryController {
+
     private final CountryService countryService;
-    private final CountryMapper countryMapper;
     public static final String ROOT_PATH = "/api/v1/countries";
 
     @ApiOperation(value = Constants.GET_COUNTRIES)
@@ -46,7 +44,7 @@ public class CountryController {
 
     @ApiOperation(value = Constants.SAVE_COUNTRY)
     @PostMapping("")
-    public ResponseEntity saveCountry(@Valid @RequestBody CountryDto countryDto, BindingResult result){
-        return countryService.saveCountry(countryDto, result);
+    public ResponseEntity<CountryDto> saveCountry(@Valid @RequestBody CountryDto countryDto){
+        return countryService.saveCountry(countryDto);
     }
 }

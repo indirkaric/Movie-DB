@@ -6,7 +6,6 @@ import com.indir.moviesdb.service.GenreService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(GenreController.ROOT_PATH)
 public class GenreController {
+
     private final GenreService genreService;
     public static final String ROOT_PATH = "/api/v1/genres";
 
@@ -44,7 +44,7 @@ public class GenreController {
 
     @ApiOperation(value = Constants.SAVE_GENRE)
     @PostMapping("")
-    public ResponseEntity saveGenre(@Valid @RequestBody GenreDto genreDto, BindingResult result){
-       return genreService.saveGenre(genreDto, result);
+    public ResponseEntity<GenreDto> saveGenre(@Valid @RequestBody GenreDto genreDto){
+       return genreService.saveGenre(genreDto);
     }
 }

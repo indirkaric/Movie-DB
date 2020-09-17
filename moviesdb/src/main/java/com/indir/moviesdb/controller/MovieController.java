@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(MovieController.ROOT_PATH)
 public class MovieController {
+
     private final MovieService movieService;
     public static final String ROOT_PATH = "/api/v1/movies";
 
@@ -47,8 +47,8 @@ public class MovieController {
 
     @ApiOperation(value = Constants.SAVE_MOVIE)
     @PostMapping("")
-    public ResponseEntity saveMovie(@Valid @RequestBody MovieDto movieDto, BindingResult result){
-        return  movieService.saveMovie(movieDto, result);
+    public ResponseEntity<MovieDto> saveMovie(@Valid @RequestBody MovieDto movieDto){
+        return  movieService.saveMovie(movieDto);
     }
 
     @ApiOperation(value = Constants.FIND_MOVIE_BY_TITLE)
@@ -68,22 +68,19 @@ public class MovieController {
 
     @ApiOperation(value = Constants.MOVIE_ADD_DIRECTOR)
     @PostMapping("/{movieId}/director/{directorId}")
-    public ResponseEntity addDirector(@PathVariable Integer movieId, @PathVariable Integer directorId){
-        ResponseEntity responseEntity = movieService.addDirector(movieId, directorId);
-        return responseEntity;
+    public ResponseEntity<MovieDto> addDirector(@PathVariable Integer movieId, @PathVariable Integer directorId){
+        return movieService.addDirector(movieId, directorId);
     }
 
     @ApiOperation(value = Constants.MOVIE_ADD_STAR)
     @PostMapping("/{movieId}/star/{starId}")
-    public ResponseEntity addStar(@PathVariable Integer movieId, @PathVariable Integer starId){
-        ResponseEntity responseEntity = movieService.addStar(movieId, starId);
-        return responseEntity;
+    public ResponseEntity<MovieDto> addStar(@PathVariable Integer movieId, @PathVariable Integer starId){
+        return movieService.addStar(movieId, starId);
     }
 
     @ApiOperation(value = Constants.MOVIE_ADD_GENRE)
     @PostMapping("/{movieId}/genre/{genreId}")
-    public ResponseEntity addGenre(@PathVariable Integer movieId, @PathVariable Integer genreId){
-        ResponseEntity responseEntity = movieService.addGenre(movieId, genreId);
-        return responseEntity;
+    public ResponseEntity<MovieDto> addGenre(@PathVariable Integer movieId, @PathVariable Integer genreId){
+        return movieService.addGenre(movieId, genreId);
     }
 }

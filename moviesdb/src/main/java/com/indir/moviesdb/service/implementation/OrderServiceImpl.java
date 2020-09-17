@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,16 +25,8 @@ public class OrderServiceImpl implements OrderService {
     private final MovieRepository movieRepository;
 
     @Override
-    public ResponseEntity saveOrder(OrderDto orderDto, BindingResult result) {
+    public ResponseEntity<OrderDto> saveOrder(OrderDto orderDto) {
         OrderDto order;
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
-
         if(!movieRepository.findById(orderDto.getMovie().getId()).isPresent())
             throw new NotFoundException(Constants.MOVIE_NOT_FOUND + orderDto.getMovie().getId());
 

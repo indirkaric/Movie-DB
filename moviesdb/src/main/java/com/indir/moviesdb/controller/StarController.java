@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(StarController.ROOT_PATH)
 public class StarController {
+
     private final StarService starService;
     public static final String ROOT_PATH = "/api/v1/stars";
 
@@ -35,7 +35,6 @@ public class StarController {
     public ResponseEntity<StarDto> getStarById(@PathVariable Integer id){
         StarDto starDto = starService.findById(id);
         return new ResponseEntity<StarDto>(starDto, HttpStatus.OK);
-
     }
 
     @ApiOperation(value = Constants.DELETE_STAR)
@@ -43,13 +42,12 @@ public class StarController {
     public ResponseEntity<Void> deleteStar(@PathVariable Integer id){
             starService.deleteStar(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
-
     }
 
     @ApiOperation(value = Constants.SAVE_STAR)
     @PostMapping("")
-    public ResponseEntity saveStar(@Valid @RequestBody StarDto starDto, BindingResult result){
-        return starService.saveStar(starDto, result);
+    public ResponseEntity<StarDto> saveStar(@Valid @RequestBody StarDto starDto){
+        return starService.saveStar(starDto);
     }
 
 }

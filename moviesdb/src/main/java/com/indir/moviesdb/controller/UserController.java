@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
@@ -19,6 +18,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping(UserController.ROOT_PATH)
 public class UserController {
+
     private final UserService userService;
     private final UserAvgRateDao userAvgRateDao;
     public static final String ROOT_PATH = "/api/v1/users";
@@ -48,8 +48,8 @@ public class UserController {
 
     @ApiOperation(value = Constants.SAVE_USER)
     @PostMapping("")
-    public ResponseEntity saveUser(@Valid @RequestBody UserDto userDto, BindingResult result){
-        return userService.saveUser(userDto, result);
+    public ResponseEntity<UserDto> saveUser(@Valid @RequestBody UserDto userDto){
+        return userService.saveUser(userDto);
     }
 
     @ApiOperation(value = Constants.USERS_ORDER_INFO)

@@ -6,7 +6,6 @@ import com.indir.moviesdb.service.DirectorService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(DirectorController.ROOT_PATH)
 public class DirectorController {
+
     private final DirectorService directorService;
     public static final String ROOT_PATH = "/api/v1/directors";
 
@@ -42,7 +42,7 @@ public class DirectorController {
 
     @ApiOperation(value = Constants.SAVE_DIRECTOR)
     @PostMapping("")
-    public ResponseEntity saveDirector(@Valid @RequestBody DirectorDto directorDto, BindingResult result){
-        return directorService.saveDirector(directorDto,result);
+    public ResponseEntity<DirectorDto> saveDirector(@Valid @RequestBody DirectorDto directorDto){
+        return directorService.saveDirector(directorDto);
     }
 }

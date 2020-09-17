@@ -6,7 +6,6 @@ import com.indir.moviesdb.service.OrderService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -16,13 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(OrderController.ROOT_PATH)
 public class OrderController {
+
     private final OrderService orderService;
     public static final String ROOT_PATH = "/api/v1/orders";
 
     @ApiOperation(value = Constants.SAVE_ORDER)
     @PostMapping("")
-    public ResponseEntity saveOrder(@Valid @RequestBody OrderDto orderDto, BindingResult result){
-        return orderService.saveOrder(orderDto, result);
+    public ResponseEntity<OrderDto> saveOrder(@Valid @RequestBody OrderDto orderDto){
+        return orderService.saveOrder(orderDto);
     }
 
     @ApiOperation(value = Constants.GET_ORDERS)

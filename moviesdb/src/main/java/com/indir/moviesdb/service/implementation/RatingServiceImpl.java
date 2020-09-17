@@ -29,16 +29,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Transactional
     @Override
-    public ResponseEntity saveRating(RatingDto ratingDto, BindingResult result) {
+    public ResponseEntity<RatingDto> saveRating(RatingDto ratingDto) {
         RatingDto rating;
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
-
         if(!movieRepository.findById(ratingDto.getRatingId().getMovie().getId()).isPresent())
             throw new NotFoundException(Constants.MOVIE_NOT_FOUND + ratingDto.getRatingId().getMovie().getId());
 

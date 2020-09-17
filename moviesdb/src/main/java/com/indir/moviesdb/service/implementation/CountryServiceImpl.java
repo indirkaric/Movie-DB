@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,14 +46,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public ResponseEntity saveCountry(CountryDto countryDto, BindingResult result) {
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<CountryDto> saveCountry(CountryDto countryDto) {
         Country tempCountry = countryRepository.save(countryMapper.toEntity(countryDto));
         CountryDto country = countryMapper.toDto(tempCountry);
         return new ResponseEntity<CountryDto>(country, HttpStatus.CREATED);

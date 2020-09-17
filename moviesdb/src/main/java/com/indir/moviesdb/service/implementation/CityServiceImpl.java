@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,15 +47,8 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public ResponseEntity saveCity(CityDto cityDto, BindingResult result) {
+    public ResponseEntity<CityDto> saveCity(CityDto cityDto) {
         CityDto city;
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(),error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String,String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
 
         if(countryRepository.findById(cityDto.getCountry().getId()).isPresent()){
                 City tempCity = cityMapper.toEntity(cityDto);

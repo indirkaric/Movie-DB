@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.*;
 import java.util.*;
 
 @Service
@@ -43,14 +42,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public ResponseEntity saveMovie(MovieDto movieDto,BindingResult result) {
-        if(result.hasErrors()){
-            Map<String,String> errorMap = new HashMap<>();
-            for(FieldError error:result.getFieldErrors()){
-                errorMap.put(error.getField(),error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String,String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<MovieDto> saveMovie(MovieDto movieDto) {
         Movie tempMovie = movieRepository.save(movieMapper.toEntity(movieDto));
         MovieDto movie = movieMapper.toDto(tempMovie);
         return new ResponseEntity<MovieDto>(movie,HttpStatus.CREATED);
