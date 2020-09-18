@@ -16,24 +16,24 @@ public class StarSearchSpecification implements Specification<Star> {
         List<Predicate> predicates = new ArrayList<>();
 
         if(filter.getId() != null){
-            final Predicate id = criteriaBuilder.equal(root.<Integer>get("id"),filter.getId());
+            final Predicate id = criteriaBuilder.equal(root.<Integer> get("id"), filter.getId());
             predicates.add(id);
         }
         if(filter.getFirstName() != null){
-            final Predicate firstName = criteriaBuilder.equal(root.<String>get("firstName"),filter.getFirstName());
+            final Predicate firstName = criteriaBuilder.equal(root.<String> get("firstName"), filter.getFirstName());
             predicates.add(firstName);
         }
         if(filter.getLastName() != null){
-            final Predicate lastName = criteriaBuilder.equal(root.<String>get("lastName"),filter.getLastName());
+            final Predicate lastName = criteriaBuilder.equal(root.<String> get("lastName"), filter.getLastName());
             predicates.add(lastName);
         }
         if(filter.getCityName() != null){
             Join<Star, City> cities = root.join("city");
-            predicates.add(criteriaBuilder.equal(cities.get("name"),filter.getCityName()));
+            predicates.add(criteriaBuilder.equal(cities.get("name"), filter.getCityName()));
         }
         if(filter.getCountryName() != null){
-            Join<Star,City> countries = root.join("city").join("country");
-            predicates.add(criteriaBuilder.equal(countries.get("name"),filter.getCountryName()));
+            Join<Star, City> countries = root.join("city").join("country");
+            predicates.add(criteriaBuilder.equal(countries.get("name"), filter.getCountryName()));
         }
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }

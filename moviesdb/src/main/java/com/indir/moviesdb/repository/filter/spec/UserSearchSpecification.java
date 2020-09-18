@@ -16,11 +16,11 @@ public class UserSearchSpecification implements Specification<User> {
         List<Predicate> predicates = new ArrayList<>();
 
         if(filter.getId() != null){
-            final Predicate id = criteriaBuilder.equal(root.<Integer>get("id"),filter.getId());
+            final Predicate id = criteriaBuilder.equal(root.<Integer> get("id"), filter.getId());
             predicates.add(id);
         }
         if(filter.getUsername() != null){
-            final Predicate username = criteriaBuilder.equal(root.<String>get("username"),filter.getUsername());
+            final Predicate username = criteriaBuilder.equal(root.<String> get("username"), filter.getUsername());
             predicates.add(username);
         }
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

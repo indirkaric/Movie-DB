@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MovieRepository extends CrudRepository<Movie,Integer>, JpaSpecificationExecutor<Movie> {
-    @Query(value = "Select * from movie where title = :title",nativeQuery = true)
+public interface MovieRepository extends CrudRepository<Movie, Integer>, JpaSpecificationExecutor<Movie> {
+    @Query(value = "Select * from movie where title = :title", nativeQuery = true)
     Movie findMovieByTitle(@Param("title")String title);
 
     @Query(value =  "Select " +

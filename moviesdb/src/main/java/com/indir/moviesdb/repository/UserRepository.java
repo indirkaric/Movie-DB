@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.CrudRepository;
 import java.util.*;
 
-public interface UserRepository extends CrudRepository<User,Integer>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends CrudRepository<User, Integer>, JpaSpecificationExecutor<User> {
     @Query(value =  "Select " +
                     "u.id," +
                     "u.first_name," +

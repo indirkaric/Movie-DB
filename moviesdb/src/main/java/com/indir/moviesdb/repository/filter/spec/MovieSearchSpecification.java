@@ -17,19 +17,19 @@ public class MovieSearchSpecification implements Specification<Movie> {
         List<Predicate> predicates = new ArrayList<>();
 
         if(filter.getTitle() != null){
-            final Predicate title = criteriaBuilder.equal(root.<String>get("title"),filter.getTitle());
+            final Predicate title = criteriaBuilder.equal(root.<String> get("title"), filter.getTitle());
             predicates.add(title);
         }
         if(filter.getStarFirstName() != null){
             Join<Movie, Star> stars = root.join("stars");
-            predicates.add(criteriaBuilder.equal(stars.get("firstName"),filter.getStarFirstName()));
+            predicates.add(criteriaBuilder.equal(stars.get("firstName"), filter.getStarFirstName()));
         }
         if(filter.getGenre() != null){
             Join<Movie, Genre> genres = root.join("genres");
-            predicates.add(criteriaBuilder.equal(genres.get("name"),filter.getGenre()));
+            predicates.add(criteriaBuilder.equal(genres.get("name"), filter.getGenre()));
         }
         if(filter.getYear() != null){
-            final Predicate year = criteriaBuilder.equal(root.<Integer>get("year"),filter.getYear());
+            final Predicate year = criteriaBuilder.equal(root.<Integer> get("year"), filter.getYear());
             predicates.add(year);
         }
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
