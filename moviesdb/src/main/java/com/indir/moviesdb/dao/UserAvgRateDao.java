@@ -16,18 +16,18 @@ public class UserAvgRateDao {
     public List<UserAvgRateDto> getAverageRateByUser(){
         List<UserAvgRateDto> resultList = new ArrayList<>();
         try {
-                String sql =    "Select " +
-                            "u.id," +
-                            "u.first_name," +
-                            "u.last_name," +
-                            "u.email," +
-                            "u.city_id," +
-                            "u.username," +
-                            "ROUND(AVG(r.rating),2) as average_rate " +
-                            "from " +
-                            "user as u " +
-                            "inner join rating as r on u.id = r.user_id " +
-                            "group by r.user_id";
+                String sql = "Select " +
+                             "u.id," +
+                             "u.first_name," +
+                             "u.last_name," +
+                             "u.email," +
+                             "u.city_id," +
+                             "u.username," +
+                             "ROUND(AVG(r.rating),2) as average_rate " +
+                             "from " +
+                             "user as u " +
+                             "inner join rating as r on u.id = r.user_id " +
+                             "group by r.user_id";
 
                 Query query = entityManager.createNativeQuery(sql);
                 List<Object[]> list = query.getResultList();
